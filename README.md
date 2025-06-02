@@ -20,7 +20,9 @@ A sleek productivity app built with **SwiftUI**, designed to gamify your task co
 
 | Task List View | Add Task Modal |
 |----------------|----------------|
-| ![Main](./screenshots/tasklist.png) | ![Add](./screenshots/addtask.png) |
+| ![image](https://github.com/user-attachments/assets/05c882e5-5fff-4e47-897e-eb8912ebc0c3)
+ | ![image](https://github.com/user-attachments/assets/4cb6bdb5-1442-4857-a5be-cde54aae1b20)
+ |
 
 ---
 
