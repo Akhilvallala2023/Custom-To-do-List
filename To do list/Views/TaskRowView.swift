@@ -19,13 +19,20 @@ struct TaskRowView: View {
                     viewModel.toggleComplete(task)
                 }
 
-            Text(task.title)
-                .strikethrough(task.isCompleted)
-                .foregroundColor(task.isCompleted ? .gray : .primary)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(task.title)
+                    .strikethrough(task.isCompleted)
+                    .foregroundColor(task.isCompleted ? .gray : .primary)
+
+                Text(task.category.rawValue.capitalized)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
         }
         .padding(.vertical, 4)
     }
 }
+
 
 #Preview {
     TaskRowView(
