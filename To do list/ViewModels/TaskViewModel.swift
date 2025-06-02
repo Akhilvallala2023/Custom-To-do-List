@@ -11,6 +11,18 @@ import Foundation
 class TaskViewModel: ObservableObject {
     @Published var tasks: [TaskItem] = []
     @Published var xp: Int = 0
+    
+    private func calculateXP(for task: TaskItem) -> Int {
+        switch task.category {
+        case .work: return 15
+        case .personal: return 10
+        case .study: return 20
+        case .health: return 12
+        case .other: return 5
+        }
+    }
+
+
 
     var level: Int {
         var total = 0
@@ -52,15 +64,21 @@ class TaskViewModel: ObservableObject {
 
     // MARK: - Toggle Task Completion
     func toggleComplete(_ task: TaskItem) {
-        guard let index = tasks.firstIndex(where: { $0.id == task.id }) else { return }
-        tasks[index].isCompleted.toggle()
+        if let index = tasks.firstIndex(where: { $0.id == task.id }) {
+            let wasCompleted = tasks[index].isCompleted
+            tasks[index].isCompleted.toggle()
 
-        if tasks[index].isCompleted {
-            let daysDiff = Calendar.current.dateComponents([.day], from: tasks[index].createdAt, to: Date()).day ?? 0
-            let awardedXP = max(10 - daysDiff, 1)
-            xp += awardedXP
+            let xpChange = calculateXP(for: tasks[index])
+
+            if tasks[index].isCompleted {
+                xp += xpChange  // Gain XP when completed
+            } else if wasCompleted {
+                xp = max(0, xp - xpChange)  // Remove XP if unchecking
+            }
         }
     }
+
+
 
     // MARK: - Delete Task
     func deleteTask(at offsets: IndexSet) {
