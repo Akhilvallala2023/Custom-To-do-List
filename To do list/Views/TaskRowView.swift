@@ -29,7 +29,8 @@ struct TaskRowView: View {
 
 #Preview {
     TaskRowView(
-        task: TaskItem(title: "Sample Task", isCompleted: false),
+        task: TaskItem(title: "Sample Task", isCompleted: false, category: .work),
         viewModel: TaskViewModel()
     )
 }
+

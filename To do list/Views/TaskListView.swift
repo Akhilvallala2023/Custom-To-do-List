@@ -19,9 +19,15 @@ struct TaskListView: View {
                     }
 
                     // ✅ Progress Bar toward next level
-                    ProgressView(value: Double(viewModel.xp % 50), total: 50)
-                        .accentColor(.green)
-                        .scaleEffect(x: 1, y: 2, anchor: .center)
+                    ProgressView(
+                        value: Double(viewModel.xp - viewModel.xpAtCurrentLevelStart),
+                        total: Double(viewModel.xpForNextLevel - viewModel.xpAtCurrentLevelStart)
+                    )
+                    .accentColor(.green)
+                    .scaleEffect(x: 1, y: 2, anchor: .center)
+
+
+
                 }
                 .padding(.horizontal)
 

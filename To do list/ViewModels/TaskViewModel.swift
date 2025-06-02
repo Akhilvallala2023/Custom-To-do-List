@@ -12,14 +12,43 @@ class TaskViewModel: ObservableObject {
     @Published var tasks: [TaskItem] = []
     @Published var xp: Int = 0
 
-        var level: Int {
-            return xp / 50
+    var level: Int {
+        var total = 0
+        var lvl = 0
+        while xp >= total + (lvl + 1) * 50 {
+            lvl += 1
+            total += lvl * 50
         }
+        return lvl
+    }
+
+    var xpAtCurrentLevelStart: Int {
+        var total = 0
+        var lvl = 0
+        while xp >= total + (lvl + 1) * 50 {
+            lvl += 1
+            total += lvl * 50
+        }
+        return total
+    }
+
+    var xpForNextLevel: Int {
+        let nextLevel = level + 1
+        var total = 0
+        for i in 1...nextLevel {
+            total += i * 50
+        }
+        return total
+    }
+
+
+
     // MARK: - Add New Task
-    func addTask(_ title: String) {
-        let newTask = TaskItem(title: title, isCompleted: false)
+    func addTask(_ title: String, category: TaskCategory) {
+        let newTask = TaskItem(title: title, isCompleted: false, category: category)
         tasks.append(newTask)
     }
+
 
     // MARK: - Toggle Task Completion
     func toggleComplete(_ task: TaskItem) {
