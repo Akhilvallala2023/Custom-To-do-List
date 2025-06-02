@@ -1,10 +1,3 @@
-//
-//  TaskListView.swift
-//  To do list
-//
-//  Created by Akhil Vallala on 6/1/25.
-//
-
 import SwiftUI
 
 struct TaskListView: View {
@@ -13,11 +6,32 @@ struct TaskListView: View {
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(viewModel.tasks) { task in
-                    TaskRowView(task: task, viewModel: viewModel)
+            VStack {
+                // ✅ XP, Level, and Progress Bar
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Text("XP: \(viewModel.xp)")
+                            .font(.headline)
+                        Spacer()
+                        Text("Level: \(viewModel.level)")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                    }
+
+                    // ✅ Progress Bar toward next level
+                    ProgressView(value: Double(viewModel.xp % 50), total: 50)
+                        .accentColor(.green)
+                        .scaleEffect(x: 1, y: 2, anchor: .center)
                 }
-                .onDelete(perform: viewModel.deleteTask)
+                .padding(.horizontal)
+
+                // ✅ Task List
+                List {
+                    ForEach(viewModel.tasks) { task in
+                        TaskRowView(task: task, viewModel: viewModel)
+                    }
+                    .onDelete(perform: viewModel.deleteTask)
+                }
             }
             .navigationTitle("To-Do List")
             .toolbar {
@@ -39,3 +53,4 @@ struct TaskListView: View {
 #Preview {
     TaskListView()
 }
+
