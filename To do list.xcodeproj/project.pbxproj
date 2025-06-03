@@ -38,7 +38,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		BC37A4762DED3780004C5B67 /* Exceptions for "To do list" folder in "To do list" target */ = {
+		BCFF25792DEE94D900BEA95F /* Exceptions for "To do list" folder in "To do list" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"ToDoListTests /TaskViewModelTests.swift",
@@ -46,14 +46,14 @@
 			);
 			target = BC37A40B2DED309B004C5B67 /* To do list */;
 		};
-		BC37A4772DED3780004C5B67 /* Exceptions for "To do list" folder in "ToDoListAppUITests" target */ = {
+		BCFF257B2DEE94E200BEA95F /* Exceptions for "To do list" folder in "To do listUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				ToDoListUITests/ToDoListAppUITests.swift,
 			);
-			target = BC37A4692DED33EB004C5B67 /* ToDoListAppUITests */;
+			target = BC37A4252DED309E004C5B67 /* To do listUITests */;
 		};
-		BC37A47D2DED3C2F004C5B67 /* Exceptions for "To do list" folder in "To do listTests" target */ = {
+		BCFF257D2DEE94F900BEA95F /* Exceptions for "To do list" folder in "To do listTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"ToDoListTests /TaskViewModelTests.swift",
@@ -66,9 +66,9 @@
 		BC37A40E2DED309B004C5B67 /* To do list */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				BC37A4762DED3780004C5B67 /* Exceptions for "To do list" folder in "To do list" target */,
-				BC37A47D2DED3C2F004C5B67 /* Exceptions for "To do list" folder in "To do listTests" target */,
-				BC37A4772DED3780004C5B67 /* Exceptions for "To do list" folder in "ToDoListAppUITests" target */,
+				BCFF25792DEE94D900BEA95F /* Exceptions for "To do list" folder in "To do list" target */,
+				BCFF257D2DEE94F900BEA95F /* Exceptions for "To do list" folder in "To do listTests" target */,
+				BCFF257B2DEE94E200BEA95F /* Exceptions for "To do list" folder in "To do listUITests" target */,
 			);
 			path = "To do list";
 			sourceTree = "<group>";

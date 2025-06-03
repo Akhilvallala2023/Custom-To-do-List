@@ -1,29 +1,16 @@
-//
-//  TaskItem.swift
-//  To do list
-//
-//  Created by Akhil Vallala on 6/1/25.
-//
-
 import Foundation
 
-enum TaskCategory: String, Codable, CaseIterable, Identifiable {
+enum TaskCategory: String, CaseIterable, Identifiable, Codable {
     case personal
     case work
     case study
     case health
     case other
 
-    var id: String { self.rawValue }
+    var id: String { rawValue }
 
     var displayName: String {
-        switch self {
-        case .personal: return "Personal"
-        case .work: return "Work"
-        case .study: return "Study"
-        case .health: return "Health"
-        case .other: return "Other"
-        }
+        rawValue.capitalized
     }
 }
 
@@ -33,6 +20,6 @@ struct TaskItem: Identifiable, Codable {
     var title: String
     var isCompleted: Bool
     var createdAt: Date = Date()
-    var category: TaskCategory
-
+    var category: String  // ✅ Now uses String
 }
+

@@ -1,29 +1,42 @@
-//
-//  TaskViewModel.swift
-//  To do list
-//
-//  Created by Akhil Vallala on 6/1/25.
-//
-
 import Foundation
-
 
 class TaskViewModel: ObservableObject {
     @Published var tasks: [TaskItem] = []
     @Published var xp: Int = 0
-    
-    private func calculateXP(for task: TaskItem) -> Int {
-        switch task.category {
-        case .work: return 15
-        case .personal: return 10
-        case .study: return 20
-        case .health: return 12
-        case .other: return 5
+    @Published var userCategories: [String] = []
+
+    var allCategories: [String] {
+        TaskCategory.allCases.map { $0.displayName } + userCategories
+    }
+
+    // MARK: - Add New Task
+    func addTask(_ title: String, category: String) {
+        let newTask = TaskItem(title: title, isCompleted: false, category: category)
+        tasks.append(newTask)
+    }
+
+    // MARK: - Toggle Task Completion
+    func toggleComplete(_ task: TaskItem) {
+        if let index = tasks.firstIndex(where: { $0.id == task.id }) {
+            let wasCompleted = tasks[index].isCompleted
+            tasks[index].isCompleted.toggle()
+
+            let xpChange = 10  // ✅ Fixed XP for every category
+
+            if tasks[index].isCompleted {
+                xp += xpChange
+            } else if wasCompleted {
+                xp = max(0, xp - xpChange)
+            }
         }
     }
 
+    // MARK: - Delete Task
+    func deleteTask(at offsets: IndexSet) {
+        tasks.remove(atOffsets: offsets)
+    }
 
-
+    // MARK: - Level System
     var level: Int {
         var total = 0
         var lvl = 0
@@ -52,36 +65,5 @@ class TaskViewModel: ObservableObject {
         }
         return total
     }
-
-
-
-    // MARK: - Add New Task
-    func addTask(_ title: String, category: TaskCategory) {
-        let newTask = TaskItem(title: title, isCompleted: false, category: category)
-        tasks.append(newTask)
-    }
-
-
-    // MARK: - Toggle Task Completion
-    func toggleComplete(_ task: TaskItem) {
-        if let index = tasks.firstIndex(where: { $0.id == task.id }) {
-            let wasCompleted = tasks[index].isCompleted
-            tasks[index].isCompleted.toggle()
-
-            let xpChange = calculateXP(for: tasks[index])
-
-            if tasks[index].isCompleted {
-                xp += xpChange  // Gain XP when completed
-            } else if wasCompleted {
-                xp = max(0, xp - xpChange)  // Remove XP if unchecking
-            }
-        }
-    }
-
-
-
-    // MARK: - Delete Task
-    func deleteTask(at offsets: IndexSet) {
-        tasks.remove(atOffsets: offsets)
-    }
 }
+

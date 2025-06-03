@@ -1,10 +1,3 @@
-//
-//  TaskRowView.swift
-//  To do list
-//
-//  Created by Akhil Vallala on 6/1/25.
-//
-
 import SwiftUI
 
 struct TaskRowView: View {
@@ -24,7 +17,7 @@ struct TaskRowView: View {
                     .strikethrough(task.isCompleted)
                     .foregroundColor(task.isCompleted ? .gray : .primary)
 
-                Text(task.category.rawValue.capitalized)
+                Text(task.category.capitalized)
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -33,10 +26,9 @@ struct TaskRowView: View {
     }
 }
 
-
 #Preview {
     TaskRowView(
-        task: TaskItem(title: "Sample Task", isCompleted: false, category: .work),
+        task: TaskItem(title: "Sample Task", isCompleted: false, category: "Work"),
         viewModel: TaskViewModel()
     )
 }

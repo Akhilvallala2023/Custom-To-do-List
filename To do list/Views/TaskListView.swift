@@ -6,7 +6,7 @@ struct TaskListView: View {
 
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(spacing: 16) {
                 // ✅ XP, Level, and Progress Bar
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
@@ -25,19 +25,17 @@ struct TaskListView: View {
                     )
                     .accentColor(.green)
                     .scaleEffect(x: 1, y: 2, anchor: .center)
-
-
-
                 }
                 .padding(.horizontal)
 
-                // ✅ Task List
+                // ✅ Scrollable Task List
                 List {
                     ForEach(viewModel.tasks) { task in
                         TaskRowView(task: task, viewModel: viewModel)
                     }
                     .onDelete(perform: viewModel.deleteTask)
                 }
+                .listStyle(.plain)
             }
             .navigationTitle("To-Do List")
             .toolbar {
