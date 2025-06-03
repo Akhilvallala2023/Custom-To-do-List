@@ -5,6 +5,7 @@ class TaskViewModel: ObservableObject {
     @Published var xp: Int = 0
     @Published var userCategories: [String] = []
 
+    // Combines static and user-defined categories
     var allCategories: [String] {
         TaskCategory.allCases.map { $0.displayName } + userCategories
     }
@@ -15,13 +16,24 @@ class TaskViewModel: ObservableObject {
         tasks.append(newTask)
     }
 
-    // MARK: - Toggle Task Completion
+    // MARK: - Delete a Custom Category
+    func deleteCategory(_ category: String) {
+        // Remove from user-defined categories
+        if let index = userCategories.firstIndex(of: category) {
+            userCategories.remove(at: index)
+
+            // Also remove all tasks belonging to the deleted category
+            tasks.removeAll { $0.category == category }
+        }
+    }
+
+    // MARK: - Toggle Task Completion and Manage XP
     func toggleComplete(_ task: TaskItem) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             let wasCompleted = tasks[index].isCompleted
             tasks[index].isCompleted.toggle()
 
-            let xpChange = 10  // ✅ Fixed XP for every category
+            let xpChange = 10  // Same XP for all categories
 
             if tasks[index].isCompleted {
                 xp += xpChange
