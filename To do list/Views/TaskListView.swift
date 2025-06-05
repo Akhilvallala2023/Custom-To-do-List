@@ -30,10 +30,19 @@ struct TaskListView: View {
 
                 // ✅ Scrollable Task List
                 List {
-                    ForEach(viewModel.tasks) { task in
-                        TaskRowView(task: task, viewModel: viewModel)
+                    Section(header: Text("To-Do")) {
+                        ForEach(viewModel.todoTasks) { task in
+                            TaskRowView(task: task, viewModel: viewModel)
+                        }
+                        .onDelete(perform: viewModel.deleteTask)
                     }
-                    .onDelete(perform: viewModel.deleteTask)
+
+                    Section(header: Text("Completed")) {
+                        ForEach(viewModel.completedTasks) { task in
+                            TaskRowView(task: task, viewModel: viewModel)
+                        }
+                        .onDelete(perform: viewModel.deleteTask)
+                    }
                 }
                 .listStyle(.plain)
             }

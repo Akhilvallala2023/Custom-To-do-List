@@ -21,5 +21,15 @@ struct TaskItem: Identifiable, Codable {
     var isCompleted: Bool
     var createdAt: Date = Date()
     var category: String  // ✅ Now uses String
-}
+    
+    mutating func toggleCompletion() {
+        isCompleted.toggle()
+    }
 
+    var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return formatter.string(from: createdAt)
+    }
+}

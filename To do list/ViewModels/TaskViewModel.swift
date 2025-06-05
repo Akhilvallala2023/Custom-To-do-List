@@ -77,5 +77,14 @@ class TaskViewModel: ObservableObject {
         }
         return total
     }
+    
+    var todoTasks: [TaskItem] {
+        tasks.filter { !$0.isCompleted }
+    }
+
+    var completedTasks: [TaskItem] {
+        tasks.filter { $0.isCompleted }
+    }
+    
 }
 
