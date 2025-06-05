@@ -5,7 +5,7 @@ struct TaskRowView: View {
     var viewModel: TaskViewModel
     var isTiming: Bool = false
     var elapsedTime: Int? = nil
-    
+
     var body: some View {
         HStack {
             Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
@@ -23,6 +23,7 @@ struct TaskRowView: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
 
+                // ✅ LIVE TIMER WHILE WORKING
                 if isTiming, let elapsed = elapsedTime {
                     let minutes = elapsed / 60
                     let seconds = elapsed % 60
@@ -31,6 +32,7 @@ struct TaskRowView: View {
                         .foregroundColor(.blue)
                 }
 
+                // ✅ DISPLAY AFTER COMPLETION
                 if task.isCompleted, let spent = task.timeSpent {
                     let minutes = Int(spent) / 60
                     let seconds = Int(spent) % 60

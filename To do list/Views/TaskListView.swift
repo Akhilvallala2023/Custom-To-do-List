@@ -37,7 +37,14 @@ struct TaskListView: View {
                     Section(header: Text("To-Do")) {
                         ForEach(viewModel.todoTasks) { task in
                             VStack(alignment: .leading, spacing: 8) {
-                                TaskRowView(task: task, viewModel: viewModel)
+                                TaskRowView(
+                                    task: task,
+                                    viewModel: viewModel,
+                                    isTiming: selectedTask?.id == task.id,
+                                    elapsedTime: selectedTask?.id == task.id && taskStartTime != nil
+                                        ? Int(currentTime.timeIntervalSince(taskStartTime!))
+                                        : nil
+                                )
 
                                 HStack {
                                     Spacer()
@@ -69,7 +76,14 @@ struct TaskListView: View {
 
                     Section(header: Text("Completed")) {
                         ForEach(viewModel.completedTasks) { task in
-                            TaskRowView(task: task, viewModel: viewModel)
+                            TaskRowView(
+                                task: task,
+                                viewModel: viewModel,
+                                isTiming: selectedTask?.id == task.id,
+                                elapsedTime: selectedTask?.id == task.id && taskStartTime != nil
+                                    ? Int(currentTime.timeIntervalSince(taskStartTime!))
+                                    : nil
+                            )
                         }
                         .onDelete(perform: viewModel.deleteTask)
                     }
@@ -88,13 +102,14 @@ struct TaskListView: View {
             }
             .sheet(isPresented: $showingAddTask) {
                 AddTaskView(viewModel: viewModel)
-                    .onReceive(timer) { time in
-                        currentTime = time
-                    }
+            }
+            .onReceive(timer) { time in
+                currentTime = time
+            }
             }
         }
     }
-}
+
 
 #Preview {
     TaskListView()
