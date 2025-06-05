@@ -3,7 +3,9 @@ import SwiftUI
 struct TaskRowView: View {
     var task: TaskItem
     var viewModel: TaskViewModel
-
+    var isTiming: Bool = false
+    var elapsedTime: Int? = nil
+    
     var body: some View {
         HStack {
             Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
@@ -20,6 +22,22 @@ struct TaskRowView: View {
                 Text(task.category.capitalized)
                     .font(.caption)
                     .foregroundColor(.secondary)
+
+                if isTiming, let elapsed = elapsedTime {
+                    let minutes = elapsed / 60
+                    let seconds = elapsed % 60
+                    Text(String(format: "⏱ %02d:%02d", minutes, seconds))
+                        .font(.caption2)
+                        .foregroundColor(.blue)
+                }
+
+                if task.isCompleted, let spent = task.timeSpent {
+                    let minutes = Int(spent) / 60
+                    let seconds = Int(spent) % 60
+                    Text(String(format: "⏱ Completed in %02d:%02d", minutes, seconds))
+                        .font(.caption2)
+                        .foregroundColor(.green)
+                }
             }
         }
         .padding(.vertical, 4)
@@ -29,7 +47,8 @@ struct TaskRowView: View {
 #Preview {
     TaskRowView(
         task: TaskItem(title: "Sample Task", isCompleted: false, category: "Work"),
-        viewModel: TaskViewModel()
+        viewModel: TaskViewModel(),
+        isTiming: true,
+        elapsedTime: 125
     )
 }
-

@@ -42,6 +42,17 @@ class TaskViewModel: ObservableObject {
             }
         }
     }
+    
+    // MARK: - Complete Task with Duration
+    func completeTask(_ task: TaskItem, duration: TimeInterval) {
+        if let index = tasks.firstIndex(where: { $0.id == task.id }) {
+            var updatedTask = tasks[index]
+            updatedTask.isCompleted = true
+            updatedTask.timeSpent = duration
+            tasks[index] = updatedTask
+            xp += 10
+        }
+    }
 
     // MARK: - Delete Task
     func deleteTask(at offsets: IndexSet) {

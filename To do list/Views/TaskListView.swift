@@ -3,6 +3,10 @@ import SwiftUI
 struct TaskListView: View {
     @StateObject private var viewModel = TaskViewModel()
     @State private var showingAddTask = false
+    @State private var selectedTask: TaskItem? = nil
+    @State private var taskStartTime: Date? = nil
+    @State private var currentTime = Date()
+    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
         NavigationView {
@@ -32,7 +36,33 @@ struct TaskListView: View {
                 List {
                     Section(header: Text("To-Do")) {
                         ForEach(viewModel.todoTasks) { task in
-                            TaskRowView(task: task, viewModel: viewModel)
+                            VStack(alignment: .leading, spacing: 8) {
+                                TaskRowView(task: task, viewModel: viewModel)
+
+                                HStack {
+                                    Spacer()
+                                    if selectedTask?.id == task.id {
+                                        Button("Stop") {
+                                            if let start = taskStartTime {
+                                                let duration = Date().timeIntervalSince(start)
+                                                viewModel.completeTask(task, duration: duration)
+                                            }
+                                            selectedTask = nil
+                                            taskStartTime = nil
+                                        }
+                                        .buttonStyle(.borderedProminent)
+                                        .tint(.red)
+                                    } else {
+                                        Button("Start") {
+                                            selectedTask = task
+                                            taskStartTime = Date()
+                                        }
+                                        .buttonStyle(.bordered)
+                                        .tint(.blue)
+                                    }
+                                }
+                            }
+                            .padding(.vertical, 4)
                         }
                         .onDelete(perform: viewModel.deleteTask)
                     }
@@ -58,6 +88,9 @@ struct TaskListView: View {
             }
             .sheet(isPresented: $showingAddTask) {
                 AddTaskView(viewModel: viewModel)
+                    .onReceive(timer) { time in
+                        currentTime = time
+                    }
             }
         }
     }

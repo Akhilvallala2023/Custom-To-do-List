@@ -21,6 +21,7 @@ struct TaskItem: Identifiable, Codable {
     var isCompleted: Bool
     var createdAt: Date = Date()
     var category: String  // ✅ Now uses String
+    var timeSpent: TimeInterval? = nil
     
     mutating func toggleCompletion() {
         isCompleted.toggle()
